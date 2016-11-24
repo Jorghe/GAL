@@ -1,0 +1,143 @@
+MODULE StepMotorDriv
+
+X,C =.x.,.c.;
+
+VALUE = 0;
+
+"Inputs
+	clock pin 1;
+	
+	X0 pin 4 istype 'com';
+	X1 pin 5 istype 'com';
+	X2 pin 6 istype 'com';
+
+	Q0 pin 13 istype 'reg';
+	Q1 pin 14 istype 'reg';
+	Q2 pin 15 istype 'reg';
+	sreg = [Q2,Q1,Q0];
+
+
+	Y0 pin 17;
+	Y1 pin 18;
+	Y2 pin 19;
+	Y3 pin 20;
+
+
+equations
+
+[Q2,Q1,Q0].clk = clock;
+
+
+state_diagram sreg
+state 0 :	Y0=1; 
+		Y1=0;
+		Y2=0;
+		Y3=0;
+	IF !X0&!X1&!X2 THEN 1; ELSE
+	IF !X0&!X1&X2  THEN 2; ELSE
+	IF !X0&X1&!X2  THEN 2; ELSE
+	IF !X0&X1&X2   THEN 1; ELSE
+	IF X0&!X1&!X2  THEN 5; ELSE
+	IF X0&!X1&X2   THEN 6; ELSE
+	IF X0&X1&!X2   THEN 6; ELSE
+	IF X0&X1&X2    THEN 5;
+
+state 1 :	Y0=0; 
+		Y1=1;
+		Y2=0;
+		Y3=0;
+	IF !X0&!X1&!X2 THEN 3; ELSE
+	IF !X0&!X1&X2  THEN 2; ELSE
+	IF !X0&X1&!X2  THEN 4; ELSE
+	IF !X0&X1&X2   THEN 3; ELSE
+	IF X0&!X1&!X2  THEN 0; ELSE
+	IF X0&!X1&X2   THEN 6; ELSE
+	IF X0&X1&!X2   THEN 2; ELSE
+	IF X0&X1&X2    THEN 0;
+state 2 :  	Y0=1; 
+		Y1=1;
+		Y2=0;
+		Y3=0;
+	IF !X0&!X1&!X2 THEN 0; ELSE
+	IF !X0&!X1&X2  THEN 4; ELSE
+	IF !X0&X1&!X2  THEN 1; ELSE
+	IF !X0&X1&X2   THEN 0; ELSE
+	IF X0&!X1&!X2  THEN 5; ELSE
+	IF X0&!X1&X2   THEN 6; ELSE
+	IF X0&X1&!X2   THEN 0; ELSE
+	IF X0&X1&X2    THEN 5;
+
+state 3 :	Y0=0; 
+		Y1=0;
+		Y2=1;
+		Y3=0;
+	IF !X0&!X1&!X2 THEN 5; ELSE
+	IF !X0&!X1&X2  THEN 2; ELSE
+	IF !X0&X1&!X2  THEN 7; ELSE
+	IF !X0&X1&X2   THEN 5; ELSE
+	IF X0&!X1&!X2  THEN 1; ELSE
+	IF X0&!X1&X2   THEN 6; ELSE
+	IF X0&X1&!X2   THEN 4; ELSE
+	IF X0&X1&X2    THEN 1;
+
+state 4 :	Y0=0; 
+		Y1=1;
+		Y2=1;
+		Y1=0;
+	IF !X0&!X1&!X2 THEN 0; ELSE
+	IF !X0&!X1&X2  THEN 7; ELSE
+	IF !X0&X1&!X2  THEN 3; ELSE
+	IF !X0&X1&X2   THEN 0; ELSE
+	IF X0&!X1&!X2  THEN 5; ELSE
+	IF X0&!X1&X2   THEN 2; ELSE
+	IF X0&X1&!X2   THEN 1; ELSE
+	IF X0&X1&X2    THEN 5;
+
+state 5 :	Y0=0; 
+		Y1=0;
+		Y2=0;
+		Y3=1;
+	IF !X0&!X1&!X2 THEN 0; ELSE
+	IF !X0&!X1&X2  THEN 2; ELSE
+	IF !X0&X1&!X2  THEN 6; ELSE
+	IF !X0&X1&X2   THEN 0; ELSE
+	IF X0&!X1&!X2  THEN 3; ELSE
+	IF X0&!X1&X2   THEN 6; ELSE
+	IF X0&X1&!X2   THEN 7; ELSE
+	IF X0&X1&X2    THEN 3;
+
+state 6 :	Y0=1; 
+		Y1=0;
+		Y2=0;
+		Y3=1;
+	IF !X0&!X1&!X2 THEN 0; ELSE
+	IF !X0&!X1&X2  THEN 3; ELSE
+	IF !X0&X1&!X2  THEN 0; ELSE
+	IF !X0&X1&X2   THEN 0; ELSE
+	IF X0&!X1&!X2  THEN 5; ELSE
+	IF X0&!X1&X2   THEN 7; ELSE
+	IF X0&X1&!X2   THEN 5; ELSE
+	IF X0&X1&X2    THEN 5;
+state 7 :	Y0=0; 
+		Y1=0;
+		Y2=1;
+		Y3=1;
+	IF !X0&!X1&!X2 THEN 0; ELSE
+	IF !X0&!X1&X2  THEN 6; ELSE
+	IF !X0&X1&!X2  THEN 5; ELSE
+	IF !X0&X1&X2   THEN 0; ELSE
+	IF X0&!X1&!X2  THEN 5; ELSE
+	IF X0&!X1&X2   THEN 4; ELSE
+	IF X0&X1&!X2   THEN 3; ELSE
+	IF X0&X1&X2    THEN 5;
+
+test_vectors([clock,X2,X1,X0] -> [sreg,Y3,Y2,Y1,Y0])
+	[.p. , 0, 0, 0] -> [0,0, 0, 0, 1];
+	[.c. , 0, 0, 1] -> [1,0, 0, 1, 0];
+	[.c. , 0, 1, 0] -> [2,0, 0, 1, 1];
+	[.c. , 0, 1, 1] -> [3,0, 1, 0, 0];
+	[.c. , 1, 0, 0] -> [4,0, 1, 1, 0];
+	[.c. , 1, 0, 1] -> [5,1, 0, 0, 0];
+	[.c. , 1, 1, 0] -> [6,1, 0, 0, 1];
+	[.c. , 1, 1, 1] -> [7,1, 1, 0, 0];
+END 
