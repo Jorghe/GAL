@@ -4,7 +4,7 @@ X,C =.x.,.c.;
 
 VALUE = 0;
 
-"Inputs
+" Inputs
 	clock pin 1;
 	
 	X0 pin 4 istype 'com';
@@ -15,7 +15,7 @@ VALUE = 0;
 	Q1 pin 14 istype 'reg';
 	Q2 pin 15 istype 'reg';
 	sreg = [Q2,Q1,Q0];
-
+" Outputs
 
 	Y0 pin 17;
 	Y1 pin 18;
