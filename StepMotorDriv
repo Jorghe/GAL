@@ -1,4 +1,4 @@
-MODULE PRAC1
+MODULE StepMotorDriv
 
 X,C =.x.,.c.;
 
