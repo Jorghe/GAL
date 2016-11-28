@@ -1,10 +1,10 @@
-MODULE StepMotorDriv
+MODULE PRAC1
 
 X,C =.x.,.c.;
 
 VALUE = 0;
 
-" Inputs
+"Inputs
 	clock pin 1;
 	
 	X0 pin 4 istype 'com';
@@ -15,7 +15,7 @@ VALUE = 0;
 	Q1 pin 14 istype 'reg';
 	Q2 pin 15 istype 'reg';
 	sreg = [Q2,Q1,Q0];
-" Outputs
+
 
 	Y0 pin 17;
 	Y1 pin 18;
@@ -29,107 +29,339 @@ equations
 
 
 state_diagram sreg
-state 0 :	Y0=1; 
-		Y1=0;
-		Y2=0;
-		Y3=0;
-	IF !X0&!X1&!X2 THEN 1; ELSE
-	IF !X0&!X1&X2  THEN 2; ELSE
-	IF !X0&X1&!X2  THEN 2; ELSE
-	IF !X0&X1&X2   THEN 1; ELSE
-	IF X0&!X1&!X2  THEN 5; ELSE
-	IF X0&!X1&X2   THEN 6; ELSE
-	IF X0&X1&!X2   THEN 6; ELSE
-	IF X0&X1&X2    THEN 5;
-
-state 1 :	Y0=0; 
+state 0 :	
+	IF !X0&!X1&!X2 THEN 1 WITH
+		{Y0=0; 
 		Y1=1;
 		Y2=0;
-		Y3=0;
-	IF !X0&!X1&!X2 THEN 3; ELSE
-	IF !X0&!X1&X2  THEN 2; ELSE
-	IF !X0&X1&!X2  THEN 4; ELSE
-	IF !X0&X1&X2   THEN 3; ELSE
-	IF X0&!X1&!X2  THEN 0; ELSE
-	IF X0&!X1&X2   THEN 6; ELSE
-	IF X0&X1&!X2   THEN 2; ELSE
-	IF X0&X1&X2    THEN 0;
-state 2 :  	Y0=1; 
+		Y3=0;} ELSE
+	IF !X0&!X1&X2  THEN 2 WITH
+		{Y0=1; 
 		Y1=1;
 		Y2=0;
-		Y3=0;
-	IF !X0&!X1&!X2 THEN 0; ELSE
-	IF !X0&!X1&X2  THEN 4; ELSE
-	IF !X0&X1&!X2  THEN 1; ELSE
-	IF !X0&X1&X2   THEN 0; ELSE
-	IF X0&!X1&!X2  THEN 5; ELSE
-	IF X0&!X1&X2   THEN 6; ELSE
-	IF X0&X1&!X2   THEN 0; ELSE
-	IF X0&X1&X2    THEN 5;
+		Y3=0;} ELSE
+	IF !X0&X1&!X2  THEN 2 WITH
+		{Y0=1; 
+		Y1=1;
+		Y2=0;
+		Y3=0;} ELSE
+	IF !X0&X1&X2   THEN 1 WITH 
+		{Y0=0; 
+		Y1=1;
+		Y2=0;
+		Y3=0;} ELSE
+	IF X0&!X1&!X2  THEN 5 WITH
+		{Y0=0; 
+		Y1=0;
+		Y2=0;
+		Y3=1;} ELSE
+	IF X0&!X1&X2   THEN 6 WITH
+		{Y0=1; 
+		Y1=0;
+		Y2=0;
+		Y3=1;} ELSE
+	IF X0&X1&!X2   THEN 6 WITH
+		{Y0=1; 
+		Y1=0;
+		Y2=0;
+		Y3=1;} ELSE
+	IF X0&X1&X2    THEN 5 WITH
+		{Y0=0; 
+		Y1=0;
+		Y2=0;
+		Y3=1;}
 
-state 3 :	Y0=0; 
+state 1 :	
+	IF !X0&!X1&!X2 THEN 3 WITH
+		{Y0=0; 
 		Y1=0;
 		Y2=1;
-		Y3=0;
-	IF !X0&!X1&!X2 THEN 5; ELSE
-	IF !X0&!X1&X2  THEN 2; ELSE
-	IF !X0&X1&!X2  THEN 7; ELSE
-	IF !X0&X1&X2   THEN 5; ELSE
-	IF X0&!X1&!X2  THEN 1; ELSE
-	IF X0&!X1&X2   THEN 6; ELSE
-	IF X0&X1&!X2   THEN 4; ELSE
-	IF X0&X1&X2    THEN 1;
-
-state 4 :	Y0=0; 
+		Y3=0;} ELSE
+	IF !X0&!X1&X2  THEN 2 WITH 
+		{Y0=1; 
+		Y1=1;
+		Y2=0;
+		Y3=0;} ELSE
+	IF !X0&X1&!X2  THEN 4 WITH
+		{Y0=0; 
 		Y1=1;
 		Y2=1;
-		Y1=0;
-	IF !X0&!X1&!X2 THEN 0; ELSE
-	IF !X0&!X1&X2  THEN 7; ELSE
-	IF !X0&X1&!X2  THEN 3; ELSE
-	IF !X0&X1&X2   THEN 0; ELSE
-	IF X0&!X1&!X2  THEN 5; ELSE
-	IF X0&!X1&X2   THEN 2; ELSE
-	IF X0&X1&!X2   THEN 1; ELSE
-	IF X0&X1&X2    THEN 5;
-
-state 5 :	Y0=0; 
-		Y1=0;
-		Y2=0;
-		Y3=1;
-	IF !X0&!X1&!X2 THEN 0; ELSE
-	IF !X0&!X1&X2  THEN 2; ELSE
-	IF !X0&X1&!X2  THEN 6; ELSE
-	IF !X0&X1&X2   THEN 0; ELSE
-	IF X0&!X1&!X2  THEN 3; ELSE
-	IF X0&!X1&X2   THEN 6; ELSE
-	IF X0&X1&!X2   THEN 7; ELSE
-	IF X0&X1&X2    THEN 3;
-
-state 6 :	Y0=1; 
-		Y1=0;
-		Y2=0;
-		Y3=1;
-	IF !X0&!X1&!X2 THEN 0; ELSE
-	IF !X0&!X1&X2  THEN 3; ELSE
-	IF !X0&X1&!X2  THEN 0; ELSE
-	IF !X0&X1&X2   THEN 0; ELSE
-	IF X0&!X1&!X2  THEN 5; ELSE
-	IF X0&!X1&X2   THEN 7; ELSE
-	IF X0&X1&!X2   THEN 5; ELSE
-	IF X0&X1&X2    THEN 5;
-state 7 :	Y0=0; 
+		Y1=0;} ELSE
+	IF !X0&X1&X2   THEN 3 WITH
+		{Y0=0; 
 		Y1=0;
 		Y2=1;
-		Y3=1;
-	IF !X0&!X1&!X2 THEN 0; ELSE
-	IF !X0&!X1&X2  THEN 6; ELSE
-	IF !X0&X1&!X2  THEN 5; ELSE
-	IF !X0&X1&X2   THEN 0; ELSE
-	IF X0&!X1&!X2  THEN 5; ELSE
-	IF X0&!X1&X2   THEN 4; ELSE
-	IF X0&X1&!X2   THEN 3; ELSE
-	IF X0&X1&X2    THEN 5;
+		Y3=0;} ELSE
+	IF X0&!X1&!X2  THEN 0 WITH
+		{Y0=1; 
+		Y1=0;
+		Y2=0;
+		Y3=0;} ELSE
+	IF X0&!X1&X2   THEN 6 WITH
+		{Y0=1; 
+		Y1=0;
+		Y2=0;
+		Y3=1;} ELSE
+	IF X0&X1&!X2   THEN 2 WITH
+		{Y0=1; 
+		Y1=1;
+		Y2=0;
+		Y3=0;} ELSE
+	IF X0&X1&X2    THEN 0 WITH
+		{Y0=1; 
+		Y1=0;
+		Y2=0;
+		Y3=0;}
+state 2 :  	
+	IF !X0&!X1&!X2 THEN 0 WITH
+		{Y0=1; 
+		Y1=0;
+		Y2=0;
+		Y3=0;} ELSE
+	IF !X0&!X1&X2  THEN 4 WITH
+		{Y0=0; 
+		Y1=1;
+		Y2=1;
+		Y1=0;} ELSE
+	IF !X0&X1&!X2  THEN 1 WITH
+		{Y0=0; 
+		Y1=1;
+		Y2=0;
+		Y3=0;} ELSE
+	IF !X0&X1&X2   THEN 0 WITH
+		{Y0=1; 
+		Y1=0;
+		Y2=0;
+		Y3=0;} ELSE
+	IF X0&!X1&!X2  THEN 5 WITH
+		{Y0=0; 
+		Y1=0;
+		Y2=0;
+		Y3=1;} ELSE
+	IF X0&!X1&X2   THEN 6 WITH
+		{Y0=1; 
+		Y1=0;
+		Y2=0;
+		Y3=1;} ELSE
+	IF X0&X1&!X2   THEN 0 WITH
+		{Y0=1; 
+		Y1=0;
+		Y2=0;
+		Y3=0;} ELSE
+	IF X0&X1&X2    THEN 5 WITH
+		{Y0=0; 
+		Y1=0;
+		Y2=0;
+		Y3=1;}
+
+state 3 :	
+	IF !X0&!X1&!X2 THEN 5 WITH
+		{Y0=0; 
+		Y1=0;
+		Y2=0;
+		Y3=1;} ELSE
+	IF !X0&!X1&X2  THEN 2 WITH
+		{Y0=1; 
+		Y1=1;
+		Y2=0;
+		Y3=0;} ELSE
+	IF !X0&X1&!X2  THEN 7 WITH
+		{Y0=0; 
+		Y1=0;
+		Y2=1;
+		Y3=1;} ELSE
+	IF !X0&X1&X2   THEN 5 WITH
+		{Y0=0; 
+		Y1=0;
+		Y2=0;
+		Y3=1;} ELSE
+	IF X0&!X1&!X2  THEN 1 WITH
+		{Y0=0; 
+		Y1=1;
+		Y2=0;
+		Y3=0;} ELSE
+	IF X0&!X1&X2   THEN 6 WITH
+		{Y0=1; 
+		Y1=0;
+		Y2=0;
+		Y3=1;} ELSE
+	IF X0&X1&!X2   THEN 4 WITH
+		{Y0=0; 
+		Y1=1;
+		Y2=1;
+		Y3=0;} ELSE
+	IF X0&X1&X2    THEN 1 WITH
+		{Y0=0; 
+		Y1=1;
+		Y2=0;
+		Y3=0;}
+
+state 4 :	
+	IF !X0&!X1&!X2 THEN 0 WITH
+		{Y0=1; 
+		Y1=0;
+		Y2=0;
+		Y3=0;} ELSE
+	IF !X0&!X1&X2  THEN 7 WITH
+		{Y0=0; 
+		Y1=0;
+		Y2=1;
+		Y3=1;} ELSE
+	IF !X0&X1&!X2  THEN 3 WITH
+		{Y0=0; 
+		Y1=0;
+		Y2=1;
+		Y3=0;} ELSE
+	IF !X0&X1&X2   THEN 0 WITH
+		{Y0=1; 
+		Y1=0;
+		Y2=0;
+		Y3=0;} ELSE
+	IF X0&!X1&!X2  THEN 5 WITH
+		{Y0=0; 
+		Y1=0;
+		Y2=0;
+		Y3=1;} ELSE
+	IF X0&!X1&X2   THEN 2 WITH
+		{Y0=1; 
+		Y1=1;
+		Y2=0;
+		Y3=0;} ELSE
+	IF X0&X1&!X2   THEN 1 WITH
+		{Y0=0; 
+		Y1=1;
+		Y2=0;
+		Y3=0;} ELSE
+	IF X0&X1&X2    THEN 5 WITH
+		{Y0=0; 
+		Y1=0;
+		Y2=0;
+		Y3=1;}
+
+state 5 :	
+	IF !X0&!X1&!X2 THEN 0 WITH
+		{Y0=1; 
+		Y1=0;
+		Y2=0;
+		Y3=0;} ELSE
+	IF !X0&!X1&X2  THEN 2 WITH
+		{Y0=1; 
+		Y1=1;
+		Y2=0;
+		Y3=0;} ELSE
+	IF !X0&X1&!X2  THEN 6 WITH
+		{Y0=1; 
+		Y1=0;
+		Y2=0;
+		Y3=1;} ELSE
+	IF !X0&X1&X2   THEN 0 WITH
+		{Y0=1; 
+		Y1=0;
+		Y2=0;
+		Y3=0;} ELSE
+	IF X0&!X1&!X2  THEN 3 WITH
+		{Y0=0; 
+		Y1=0;
+		Y2=1;
+		Y3=0;} ELSE
+	IF X0&!X1&X2   THEN 6 WITH
+		{Y0=1; 
+		Y1=0;
+		Y2=0;
+		Y3=1;} ELSE
+	IF X0&X1&!X2   THEN 7 WITH
+		{Y0=0; 
+		Y1=0;
+		Y2=1;
+		Y3=1;} ELSE
+	IF X0&X1&X2    THEN 3 WITH
+		{Y0=0; 
+		Y1=0;
+		Y2=1;
+		Y3=0;}
+
+state 6 :	
+	IF !X0&!X1&!X2 THEN 0 WITH
+		{Y0=1; 
+		Y1=0;
+		Y2=0;
+		Y3=0;} ELSE
+	IF !X0&!X1&X2  THEN 3 WITH
+		{Y0=0; 
+		Y1=0;
+		Y2=1;
+		Y3=0;} ELSE
+	IF !X0&X1&!X2  THEN 0 WITH
+		{Y0=1; 
+		Y1=0;
+		Y2=0;
+		Y3=0;} ELSE
+	IF !X0&X1&X2   THEN 0 WITH
+		{Y0=1; 
+		Y1=0;
+		Y2=0;
+		Y3=0;} ELSE
+	IF X0&!X1&!X2  THEN 5 WITH
+		{Y0=0; 
+		Y1=0;
+		Y2=0;
+		Y3=1;} ELSE
+	IF X0&!X1&X2   THEN 7 WITH
+		{Y0=0; 
+		Y1=0;
+		Y2=1;
+		Y3=1;} ELSE
+	IF X0&X1&!X2   THEN 5 WITH
+		{Y0=0; 
+		Y1=0;
+		Y2=0;
+		Y3=1;} ELSE
+	IF X0&X1&X2    THEN 5 WITH
+		{Y0=0; 
+		Y1=0;
+		Y2=0;
+		Y3=1;}
+state 7 :	
+	IF !X0&!X1&!X2 THEN 0 WITH
+		{Y0=1; 
+		Y1=0;
+		Y2=0;
+		Y3=0;} ELSE
+	IF !X0&!X1&X2  THEN 6 WITH
+		{Y0=1; 
+		Y1=0;
+		Y2=0;
+		Y3=1;} ELSE
+	IF !X0&X1&!X2  THEN 5 WITH
+		{Y0=0; 
+		Y1=0;
+		Y2=0;
+		Y3=1;} ELSE
+	IF !X0&X1&X2   THEN 0 WITH
+		{Y0=1; 
+		Y1=0;
+		Y2=0;
+		Y3=0;} ELSE
+	IF X0&!X1&!X2  THEN 5 WITH
+		{Y0=0; 
+		Y1=0;
+		Y2=0;
+		Y3=1;} ELSE
+	IF X0&!X1&X2   THEN 4 WITH
+		{Y0=0; 
+		Y1=1;
+		Y2=1;
+		Y1=0;} ELSE
+	IF X0&X1&!X2   THEN 3 WITH
+		{Y0=0; 
+		Y1=0;
+		Y2=1;
+		Y3=0;} ELSE
+	IF X0&X1&X2    THEN 5 WITH
+		{Y0=0; 
+		Y1=0;
+		Y2=0;
+		Y3=1;}
 
 test_vectors([clock,X2,X1,X0] -> [sreg,Y3,Y2,Y1,Y0])
 	[.p. , 0, 0, 0] -> [0,0, 0, 0, 1];
@@ -140,4 +372,5 @@ test_vectors([clock,X2,X1,X0] -> [sreg,Y3,Y2,Y1,Y0])
 	[.c. , 1, 0, 1] -> [5,1, 0, 0, 0];
 	[.c. , 1, 1, 0] -> [6,1, 0, 0, 1];
 	[.c. , 1, 1, 1] -> [7,1, 1, 0, 0];
+
 END 
