@@ -1,4 +1,6 @@
 # GAL
+This is a 4 phase stepper motor driver built with an Generic Array Logic (GAL). I wasn't able to find any information on how to use these obsolete systems, so I wrote all the steps to code it. The full project is in the wiki: https://github.com/Jorghe/GAL/wiki/Stepper-Motor-Driver-with-a-GAL-22V10
+
 For this project, I used several components in order to build this driver.
 
 A 5VDC unipolar 4 phases Stepper motor
